@@ -1,0 +1,106 @@
+{
+  "name": "auto-todo-manager",
+  "displayName": "Auto TODO Manager",
+  "description": "Automatically detects TODOs, organizes them in a sidebar view, and reminds you of pending tasks.",
+  "icon": "src/images/auto-todo-manager.png",
+  "publisher": "heberalmeida",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heberalmeida/auto-todo-manager.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:autoTodoManager.refresh",
+    "onView:autoTodoManagerView"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "autoTodoManager.refresh",
+        "title": "Auto TODO Manager: Rescan TODOs"
+      },
+      {
+        "command": "autoTodoManager.toggleActivityBar",
+        "title": "Auto TODO Manager: Toggle Activity Bar Icon"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "autoTodoManager",
+          "title": "Auto TODO Manager",
+          "icon": "src/images/auto-todo-manager.svg"
+        }
+      ]
+    },
+    "views": {
+      "autoTodoManager": [
+        {
+          "id": "autoTodoManagerView",
+          "name": "Auto TODOs"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Auto TODO Manager",
+      "properties": {
+        "autoTodoManager.keywords": {
+          "type": "array",
+          "default": [
+            "TODO",
+            "FIXME",
+            "BUG",
+            "HACK",
+            "NOTE"
+          ],
+          "description": "Keywords used to detect reminders in code."
+        },
+        "autoTodoManager.globPatterns": {
+          "type": "array",
+          "default": [
+            "**/*.ts",
+            "**/*.tsx",
+            "**/*.js",
+            "**/*.jsx",
+            "**/*.vue",
+            "**/*.php",
+            "**/*.py",
+            "**/*.java",
+            "**/*.cs",
+            "**/*.go",
+            "**/*.rb",
+            "**/*.html",
+            "**/*.md"
+          ],
+          "description": "File patterns scanned for TODOs."
+        },
+        "autoTodoManager.showActivityBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Auto TODO Manager icon in the Activity Bar. You can also hide it manually via View > Appearance > Activity Bar Items, or use the command 'Auto TODO Manager: Toggle Activity Bar Icon'."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "build": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "echo \"No tests yet\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.7.0",
+    "typescript": "^5.0.0"
+  }
+}
