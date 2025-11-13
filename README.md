@@ -8,10 +8,6 @@ Perfect for developers who want a clean, centralized, and automated way to track
 
 ---
 
-## Screenshots
-
-![Auto TODO Manager Screenshot](src/images/screen.jpg)
-
 *The sidebar view showing all TODOs organized by file*
 
 ![Extension Icon](src/images/auto-todo-manager.png)

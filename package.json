@@ -4,7 +4,7 @@
   "description": "Automatically detects TODOs, organizes them in a sidebar view, and reminds you of pending tasks.",
   "icon": "src/images/auto-todo-manager.png",
   "publisher": "heberalmeida",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/heberalmeida/auto-todo-manager.git"
