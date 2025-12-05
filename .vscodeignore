@@ -9,3 +9,12 @@ vsc-extension-quickstart.md
 **/*.map
 examples/**
 IMPROVEMENTS.md
+node_modules/**
+CONTRIBUTING.md
+verify.js
+*.vsix
+.git/**
+.gitignore
+package-lock.json
+*.log
+.DS_Store

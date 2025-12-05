@@ -4,7 +4,7 @@
   "description": "Automatically detects TODOs, organizes them in a sidebar view, and reminds you of pending tasks.",
   "icon": "src/images/auto-todo-manager.png",
   "publisher": "heberalmeida",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/heberalmeida/auto-todo-manager.git"
@@ -25,11 +25,60 @@
     "commands": [
       {
         "command": "autoTodoManager.refresh",
-        "title": "Auto TODO Manager: Rescan TODOs"
+        "title": "Auto TODO Manager: Rescan TODOs",
+        "icon": "$(refresh)"
       },
       {
         "command": "autoTodoManager.toggleActivityBar",
         "title": "Auto TODO Manager: Toggle Activity Bar Icon"
+      },
+      {
+        "command": "autoTodoManager.filterByType",
+        "title": "Filter by Type",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "autoTodoManager.clearFilter",
+        "title": "Clear Filter",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "autoTodoManager.searchText",
+        "title": "Search TODOs by Text",
+        "icon": "$(search)"
+      },
+      {
+        "command": "autoTodoManager.expandAll",
+        "title": "Expand All"
+      },
+      {
+        "command": "autoTodoManager.collapseAll",
+        "title": "Collapse All"
+      },
+      {
+        "command": "autoTodoManager.showCurrentFileOnly",
+        "title": "Show Current File Only"
+      },
+      {
+        "command": "autoTodoManager.markAsDone",
+        "title": "Mark as Done"
+      },
+      {
+        "command": "autoTodoManager.copyTodoText",
+        "title": "Copy TODO Text"
+      },
+      {
+        "command": "autoTodoManager.copyFilePath",
+        "title": "Copy File Path"
+      },
+      {
+        "command": "autoTodoManager.revealInExplorer",
+        "title": "Reveal in Explorer"
+      },
+      {
+        "command": "autoTodoManager.showStatistics",
+        "title": "Show Statistics Dashboard",
+        "icon": "$(graph)"
       }
     ],
     "viewsContainers": {
@@ -45,7 +94,64 @@
       "autoTodoManager": [
         {
           "id": "autoTodoManagerView",
-          "name": "Auto TODOs"
+          "name": "Auto TODOs",
+          "when": "true"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "autoTodoManager.refresh",
+          "when": "view == autoTodoManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.filterByType",
+          "when": "view == autoTodoManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.clearFilter",
+          "when": "view == autoTodoManagerView && todoFilterActive",
+          "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.showCurrentFileOnly",
+          "when": "view == autoTodoManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.expandAll",
+          "when": "view == autoTodoManagerView",
+          "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.collapseAll",
+          "when": "view == autoTodoManagerView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "autoTodoManager.markAsDone",
+          "when": "view == autoTodoManagerView && viewItem == todoItem",
+          "group": "inline"
+        },
+        {
+          "command": "autoTodoManager.copyTodoText",
+          "when": "view == autoTodoManagerView && viewItem == todoItem",
+          "group": "1_actions"
+        },
+        {
+          "command": "autoTodoManager.copyFilePath",
+          "when": "view == autoTodoManagerView && viewItem == todoItem",
+          "group": "1_actions"
+        },
+        {
+          "command": "autoTodoManager.revealInExplorer",
+          "when": "view == autoTodoManagerView && viewItem == todoItem",
+          "group": "2_navigation"
         }
       ]
     },
@@ -86,6 +192,42 @@
           "type": "boolean",
           "default": true,
           "description": "Show the Auto TODO Manager icon in the Activity Bar. You can also hide it manually via View > Appearance > Activity Bar Items, or use the command 'Auto TODO Manager: Toggle Activity Bar Icon'."
+        },
+        "autoTodoManager.excludePatterns": {
+          "type": "array",
+          "default": [],
+          "description": "Additional exclude patterns beyond the default ones. Patterns are relative to the workspace root. Example: ['**/test/**', '**/*.min.js']"
+        },
+        "autoTodoManager.maxFileSize": {
+          "type": "number",
+          "default": 5242880,
+          "description": "Maximum file size in bytes to scan. Files larger than this will be skipped. Default is 5MB (5242880 bytes)."
+        },
+        "autoTodoManager.refreshInterval": {
+          "type": "number",
+          "default": 500,
+          "description": "Debounce interval in milliseconds for file change events. Lower values scan more frequently but may impact performance."
+        },
+        "autoTodoManager.autoScanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan for TODOs when files are saved."
+        },
+        "autoTodoManager.showProgress": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show progress indicator during workspace scanning."
+        },
+        "autoTodoManager.groupByType": {
+          "type": "boolean",
+          "default": false,
+          "description": "Group TODOs by type (TODO, FIXME, etc.) instead of by file."
+        },
+        "autoTodoManager.sortOrder": {
+          "type": "string",
+          "enum": ["file", "type", "line"],
+          "default": "file",
+          "description": "Sort order for TODO entries: 'file' (by file path), 'type' (by TODO type), or 'line' (by line number)."
         }
       }
     }
