@@ -147,6 +147,34 @@ Configure which files to scan:
 ### Commands
 
 - **Auto TODO Manager: Rescan TODOs** — Manually refresh the TODO list
+- **Auto TODO Manager: Export to Markdown** — Export TODOs to Markdown file
+- **Auto TODO Manager: Export to JSON** — Export TODOs to JSON file
+- **Auto TODO Manager: Export to CSV** — Export TODOs to CSV file
+- **Auto TODO Manager: Copy TODOs to Clipboard** — Copy TODOs as formatted text to clipboard
+- **Auto TODO Manager: Show Statistics Dashboard** — Open statistics dashboard
+
+#### Custom Keyboard Shortcuts
+
+You can add custom keyboard shortcuts for export commands. Open your keybindings file (`Ctrl+Shift+P` → "Preferences: Open Keyboard Shortcuts (JSON)") and add:
+
+```json
+{
+  "key": "ctrl+alt+e",
+  "command": "autoTodoManager.exportToMarkdown"
+},
+{
+  "key": "ctrl+alt+j",
+  "command": "autoTodoManager.exportToJSON"
+},
+{
+  "key": "ctrl+alt+c",
+  "command": "autoTodoManager.exportToCSV"
+},
+{
+  "key": "ctrl+alt+v",
+  "command": "autoTodoManager.copyToClipboard"
+}
+```
 
 ---
 
@@ -313,13 +341,13 @@ This roadmap outlines the planned features and improvements for Auto TODO Manage
   - [x] Visual charts and graphs (text-based bars and statistics)
 
 #### Export & Sharing
-- [ ] **Export Functionality**
-  - [ ] Export to Markdown (formatted report)
-  - [ ] Export to JSON (machine-readable)
-  - [ ] Export to CSV (spreadsheet compatible)
-  - [ ] Copy to clipboard as formatted text
-  - [ ] Scheduled exports
-  - [ ] Custom export templates
+- [x] **Export Functionality**
+  - [x] Export to Markdown (formatted report)
+  - [x] Export to JSON (machine-readable)
+  - [x] Export to CSV (spreadsheet compatible)
+  - [x] Copy to clipboard as formatted text
+  - [ ] Scheduled exports *(Future enhancement)*
+  - [ ] Custom export templates *(Future enhancement)*
 
 #### Advanced Features
 - [ ] **Better Pattern Matching**

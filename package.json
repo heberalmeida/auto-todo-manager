@@ -4,7 +4,7 @@
   "description": "Automatically detects TODOs, organizes them in a sidebar view, and reminds you of pending tasks.",
   "icon": "src/images/auto-todo-manager.png",
   "publisher": "heberalmeida",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/heberalmeida/auto-todo-manager.git"
@@ -34,51 +34,71 @@
       },
       {
         "command": "autoTodoManager.filterByType",
-        "title": "Filter by Type",
+        "title": "Auto TODO Manager: Filter by Type",
         "icon": "$(filter)"
       },
       {
         "command": "autoTodoManager.clearFilter",
-        "title": "Clear Filter",
+        "title": "Auto TODO Manager: Clear Filter",
         "icon": "$(clear-all)"
       },
       {
         "command": "autoTodoManager.searchText",
-        "title": "Search TODOs by Text",
+        "title": "Auto TODO Manager: Search TODOs by Text",
         "icon": "$(search)"
       },
       {
         "command": "autoTodoManager.expandAll",
-        "title": "Expand All"
+        "title": "Auto TODO Manager: Expand All"
       },
       {
         "command": "autoTodoManager.collapseAll",
-        "title": "Collapse All"
+        "title": "Auto TODO Manager: Collapse All"
       },
       {
         "command": "autoTodoManager.showCurrentFileOnly",
-        "title": "Show Current File Only"
+        "title": "Auto TODO Manager: Show Current File Only"
       },
       {
         "command": "autoTodoManager.markAsDone",
-        "title": "Mark as Done"
+        "title": "Auto TODO Manager: Mark as Done"
       },
       {
         "command": "autoTodoManager.copyTodoText",
-        "title": "Copy TODO Text"
+        "title": "Auto TODO Manager: Copy TODO Text"
       },
       {
         "command": "autoTodoManager.copyFilePath",
-        "title": "Copy File Path"
+        "title": "Auto TODO Manager: Copy File Path"
       },
       {
         "command": "autoTodoManager.revealInExplorer",
-        "title": "Reveal in Explorer"
+        "title": "Auto TODO Manager: Reveal in Explorer"
       },
       {
         "command": "autoTodoManager.showStatistics",
-        "title": "Show Statistics Dashboard",
+        "title": "Auto TODO Manager: Show Statistics Dashboard",
         "icon": "$(graph)"
+      },
+      {
+        "command": "autoTodoManager.exportToMarkdown",
+        "title": "Auto TODO Manager: Export to Markdown",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "autoTodoManager.exportToJSON",
+        "title": "Auto TODO Manager: Export to JSON",
+        "icon": "$(json)"
+      },
+      {
+        "command": "autoTodoManager.exportToCSV",
+        "title": "Auto TODO Manager: Export to CSV",
+        "icon": "$(table)"
+      },
+      {
+        "command": "autoTodoManager.copyToClipboard",
+        "title": "Auto TODO Manager: Copy TODOs to Clipboard",
+        "icon": "$(clippy)"
       }
     ],
     "viewsContainers": {
@@ -130,6 +150,26 @@
           "command": "autoTodoManager.collapseAll",
           "when": "view == autoTodoManagerView",
           "group": "navigation"
+        },
+        {
+          "command": "autoTodoManager.exportToMarkdown",
+          "when": "view == autoTodoManagerView",
+          "group": "export"
+        },
+        {
+          "command": "autoTodoManager.exportToJSON",
+          "when": "view == autoTodoManagerView",
+          "group": "export"
+        },
+        {
+          "command": "autoTodoManager.exportToCSV",
+          "when": "view == autoTodoManagerView",
+          "group": "export"
+        },
+        {
+          "command": "autoTodoManager.copyToClipboard",
+          "when": "view == autoTodoManagerView",
+          "group": "export"
         }
       ],
       "view/item/context": [

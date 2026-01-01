@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as crypto from "crypto";
 import * as fs from "fs";
+import * as path from "path";
 import { TodoEntry, TodoTreeDataProvider, TodoFilter } from "./todoTree";
 import {
   calculateStatistics,
@@ -8,6 +9,13 @@ import {
   formatStatisticsAsText,
   TodoStatistics
 } from "./statistics";
+import {
+  exportToMarkdown,
+  exportToJSON,
+  exportToCSV,
+  exportToFormattedText,
+  saveToFile
+} from "./export";
 
 /** The tree data provider instance for the TODO view */
 let treeDataProvider: TodoTreeDataProvider;
@@ -328,6 +336,108 @@ function registerCommands(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(showStatisticsCommand);
+
+  const exportToMarkdownCommand = vscode.commands.registerCommand(
+    "autoTodoManager.exportToMarkdown",
+    async () => {
+      const entries = treeDataProvider.getAllEntries();
+      if (entries.length === 0) {
+        vscode.window.showInformationMessage("No TODOs to export.");
+        return;
+      }
+
+      try {
+        const content = exportToMarkdown(entries);
+        const uri = await saveToFile(content, "todos.md");
+        if (uri) {
+          vscode.window.showInformationMessage(
+            `TODO report exported to ${path.basename(uri.fsPath)}`
+          );
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        vscode.window.showErrorMessage(`Failed to export: ${errorMessage}`);
+        outputChannel.appendLine(`Export error: ${errorMessage}`);
+      }
+    }
+  );
+  context.subscriptions.push(exportToMarkdownCommand);
+
+  const exportToJSONCommand = vscode.commands.registerCommand(
+    "autoTodoManager.exportToJSON",
+    async () => {
+      const entries = treeDataProvider.getAllEntries();
+      if (entries.length === 0) {
+        vscode.window.showInformationMessage("No TODOs to export.");
+        return;
+      }
+
+      try {
+        const content = exportToJSON(entries);
+        const uri = await saveToFile(content, "todos.json");
+        if (uri) {
+          vscode.window.showInformationMessage(
+            `TODO report exported to ${path.basename(uri.fsPath)}`
+          );
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        vscode.window.showErrorMessage(`Failed to export: ${errorMessage}`);
+        outputChannel.appendLine(`Export error: ${errorMessage}`);
+      }
+    }
+  );
+  context.subscriptions.push(exportToJSONCommand);
+
+  const exportToCSVCommand = vscode.commands.registerCommand(
+    "autoTodoManager.exportToCSV",
+    async () => {
+      const entries = treeDataProvider.getAllEntries();
+      if (entries.length === 0) {
+        vscode.window.showInformationMessage("No TODOs to export.");
+        return;
+      }
+
+      try {
+        const content = exportToCSV(entries);
+        const uri = await saveToFile(content, "todos.csv");
+        if (uri) {
+          vscode.window.showInformationMessage(
+            `TODO report exported to ${path.basename(uri.fsPath)}`
+          );
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        vscode.window.showErrorMessage(`Failed to export: ${errorMessage}`);
+        outputChannel.appendLine(`Export error: ${errorMessage}`);
+      }
+    }
+  );
+  context.subscriptions.push(exportToCSVCommand);
+
+  const copyToClipboardCommand = vscode.commands.registerCommand(
+    "autoTodoManager.copyToClipboard",
+    async () => {
+      const entries = treeDataProvider.getAllEntries();
+      if (entries.length === 0) {
+        vscode.window.showInformationMessage("No TODOs to copy.");
+        return;
+      }
+
+      try {
+        const content = exportToFormattedText(entries);
+        await vscode.env.clipboard.writeText(content);
+        vscode.window.showInformationMessage(
+          `Copied ${entries.length} TODOs to clipboard`
+        );
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        vscode.window.showErrorMessage(`Failed to copy: ${errorMessage}`);
+        outputChannel.appendLine(`Copy error: ${errorMessage}`);
+      }
+    }
+  );
+  context.subscriptions.push(copyToClipboardCommand);
 }
 
 /**
